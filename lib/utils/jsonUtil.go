@@ -6,10 +6,9 @@ import (
 	"io/ioutil"
 )
 
-//TODO: fix not serializing data correctly
 //StructToJSON save a struct as json at a specified location
-func StructToJSON(filePath string, object interface{}) {
-	jsonData, err := json.Marshal(object)
+func StructToJSON(filePath string, mapObj map[string]interface{}) {
+	jsonData, err := json.Marshal(mapObj)
 	if err != nil {
 		fmt.Println("an error occured while marshalling struct")
 		fmt.Println(err)
@@ -22,11 +21,13 @@ func StructToJSON(filePath string, object interface{}) {
 }
 
 //JSONToStruct deserialize json file to a struct
-func JSONToStruct(filePath string, returnObj interface{}) {
-	if bytes, err := ioutil.ReadFile(filePath); err != nil {
-		json.Unmarshal(bytes, returnObj)
+func JSONToStruct(filePath string) map[string]interface{} {
+	var returnObj map[string]interface{}
+	if bytes, err := ioutil.ReadFile(filePath); err == nil {
+		json.Unmarshal(bytes, &returnObj)
 	} else {
 		fmt.Println("there was an error while unmarshalling data")
 		fmt.Println(err)
 	}
+	return returnObj
 }

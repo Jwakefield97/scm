@@ -47,18 +47,14 @@ func createInitFiles() {
 	initConfig()
 }
 
-type configStruct struct {
-	name         string
-	creationTime time.Time
+var defaultConfig = map[string]interface{}{
+	"name":         "jake",
+	"creationTime": time.Now(),
 }
 
 func initConfig() {
-	config := configStruct{
-		"jake",
-		time.Now(),
-	}
-	utils.StructToJSON("./.scm/config.json", config)
-	test := new(configStruct)
-	utils.JSONToStruct("./.scm/config.json", &test)
-	fmt.Println(test)
+	utils.StructToJSON("./.scm/config.json", defaultConfig)
+	result := utils.JSONToStruct("./.scm/config.json")
+	fmt.Println(result)
+	fmt.Println(result["name"])
 }
