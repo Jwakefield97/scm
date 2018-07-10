@@ -25,6 +25,8 @@ var argsMap = map[string]func(options []string){
 	"f":        command.Fetch,
 	"add":      command.Add,
 	"a":        command.Add,
+	"status":   command.Status,
+	"s":        command.Status,
 }
 
 func printHelp(msg string) {
@@ -42,8 +44,9 @@ func routeCommand(args []string) {
 		if cmd == "" {
 			printHelp("no command supplied.")
 		} else {
-			//if arg is in map execute else print help
-			if val, pres := argsMap[cmd]; pres {
+			if cmd == "h" || cmd == "help" || cmd == "--help" {
+				printHelp("")
+			} else if val, pres := argsMap[cmd]; pres { //if arg is in map execute else print help
 				val(options)
 			} else {
 				printHelp("command not found.")

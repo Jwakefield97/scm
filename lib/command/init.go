@@ -31,6 +31,12 @@ func Init(args []string) {
 	}
 }
 
+var defaultConfig = map[string]interface{}{
+	"remoteUrl":     "",
+	"creationTime":  time.Now(),
+	"currentBranch": "master",
+}
+
 func createInitFiles() {
 	if err := os.Mkdir("./.scm/branch", 0777); err != nil {
 		fmt.Println("an error occured while initializing scm repo.")
@@ -44,17 +50,6 @@ func createInitFiles() {
 		fmt.Println("an error occured while initializing scm repo.")
 		fmt.Println(err)
 	}
-	initConfig()
-}
-
-var defaultConfig = map[string]interface{}{
-	"name":         "jake",
-	"creationTime": time.Now(),
-}
-
-func initConfig() {
+	//initialize and create default repo config
 	utils.StructToJSON("./.scm/config.json", defaultConfig)
-	result := utils.JSONToStruct("./.scm/config.json")
-	fmt.Println(result)
-	fmt.Println(result["name"])
 }
