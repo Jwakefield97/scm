@@ -17,6 +17,7 @@ import (
 		objects/       <-- used to store file objects
 			fileObj.json
 		config.json    <-- config of the repo
+		repoStructure.json <-- current structure of the files in the repo
 */
 
 //Init initialize an empty repo
@@ -50,6 +51,9 @@ func createInitFiles() {
 		fmt.Println("an error occured while initializing scm repo.")
 		fmt.Println(err)
 	}
+	//get current structure of repo and store in repoStructure.json
+	utils.StructToJSON("./.scm/fileStructure.json", utils.ScanForFiles("./"))
+
 	//initialize and create default repo config
 	utils.StructToJSON("./.scm/config.json", defaultConfig)
 }
